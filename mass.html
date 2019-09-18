@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+#raindropsCanvas{
+position:relative;
+left:0;
+top:0;
+z-index: 100;
+}
+#raindropsExtraCanvas{
+position:absolute;
+left:0;
+top:0;
+z-index: 99;
+}
+.drop{
+  background-size: cover;
+  position: absolute;
+  border-radius: 70%;
+  box-shadow: 2px 2px 1px rgba(0,0,0,.7), inset 1px 1px 1px rgba(255,255,255,.9), inset -1px -1px 1px rgba(0,0,0,.3);
+  filter:url("#myFilter") drop-shadow(4px 4px 4px rgba(0,0,0,0.7));
+  z-index: 1000;
+  animation: dropmoving 0.3s infinite;
+}
+.drop::before{
+  content:"";
+  width: 30%;
+  height: 30%;
+  display: block;
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  border-radius: 100%;
+  background-color: #fff;
+}
+/*
+@keyframes dropmoving{
+from {transform:skew(-6deg) rotate(-5deg);width:36px;height:34px;}
+50% {transform:skew(0deg) rotate(0deg);width:15px;height:40px;}
+to {transform:skew(6deg) rotate(5deg);width:36px;height:34px;}
+}
+*/
+.drop:before{
+content:"";
+width:30%;
+height:30%;
+border-radius:50%;
+background:white;
+position:absolute;
+right:15%;
+bottom:15%; 
+opacity:0.9;
+filter:blur(1px);
+z-index:999;
+}
+.drop:after{
+content:"";
+width:100%;
+height:100%;
+border-radius:50%;
+background:linear-gradient(to bottom,rgba(255,255,255,0.2),rgba(80,80,80,0.9));
+position:absolute;
+right:0%;
+bottom:0%;
+opacity:0.55;
+filter:blur(2px);
+transform:skew(20deg);
+z-index:990;
+}
+
+/* Raindrops styles - end code */
+
+*{
+  margin: 0;
+  padding: 0;
+}
+input,textarea{
+			outline:none;
+			}
+body{
+  background:#fefefe;
+}
+#topBlock{
+  width: 100%;
+  min-height: 100px;
+  box-shadow: 0 8px 5px rgba(0,0,0,.2);
+  position: relative;
+  z-index: 1200;
+  background-color: #A5B8B2;
+  background: linear-gradient(to bottom,#A5B8B2,#7E7F7C);
+}
+.siteLogo{
+  width: 40%;
+  float: left;
+  font-family: Arial;
+  font-size: 30px;
+  padding-left: 20px;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.topRightBlock{
+  width: 60%;
+  float: right;
+  text-align: right;
+  padding-right: 20px;
+  margin-top: -12px;
+}
+
+main{
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: Arial;
+}
+main h1{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+main p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.searchform{
+			position:relative;
+			width: 75%;
+    top: -35px;
+  right: -60px;
+			}
+			.searchform input[type='search']{
+				width:66.6%;
+				height:30px;
+				background:transparent;
+				border-radius:10px;
+				border-top:1px solid #6B6B6B;
+				border-left:1px solid #6B6B6B;
+				border-right:1px solid #DEDEDE;
+				border-bottom:1px solid #DEDEDE;
+				/*border:1px solid #A0A0A0;*/
+				padding:2px 10px;
+				box-shadow:1px 1px 2px #2A2A2A inset;
+			}
+			
+			.searchform input[type='submit'] + label{
+				cursor: pointer;
+				display: inline-block;
+				position: relative;
+				top: 15px;
+				right: 10px;
+				width: 40px;
+				height: 40px;
+				background: transparent;
+				border-radius: 0px 12px 12px 0px;
+				border-top: 2px solid #6B6B6B;
+				border-right: 2px solid #DEDEDE;
+				border-bottom: 1px solid #DEDEDE;
+				box-shadow: 1px 1px 3px #2A2A2A inset;
+			}
+			
+			.searchform input[type='submit']{
+			display:none;
+			}
+			.searchform input[type='submit'] + label:before{
+			content: "";
+			display: inline-block;
+			position: absolute;
+			background: transparent;
+			border-radius: 100%;
+			width: 55px;
+			height: 55px;
+			text-indent: -9000px;
+			border-top: 14px solid #444444;
+			border-left: 14px solid #444444;
+			border-right: 14px solid #2F2F2F;
+			border-bottom: 14px solid #2F2F2F;
+			right: -33px;
+			top: -21px;
+			z-index:200;
+			}
+			.searchform input[type='submit'] + label:hover:before,.searchform input[type='submit'] + label.focus:before{
+			content: "";
+			display: inline-block;
+			position: absolute;
+			background: transparent;
+			border-radius: 100%;
+			width: 55px;
+			height: 55px;
+			text-indent: -9000px;
+			border-top: 14px solid #555555;
+			border-left: 14px solid #555555;
+			border-right: 14px solid #2F2F2F;
+			border-bottom: 14px solid #2F2F2F;
+			right: -33px;
+			top: -21px;
+			z-index:200;
+			/*box-shadow: 1px 1px 1px #4A4A4A;*/
+			}
+			
+			.searchform input[type='submit'] + label:after{
+			content:"";
+			position:absolute;
+			display:inline-block;
+			width:60px;
+			height:15px;
+			background:#2F2F2F;
+			transform:rotateZ(28deg) translateX(66px) translateY(13px);
+			z-index:100;
+			/*box-shadow: 1px 1px 1px transparent;*/
+        left: 0;
+        top: -10%;
+			}
+			
+			.searchform input[type='submit'] + label:hover:after{
+			content:"";
+			position:absolute;
+			display:inline-block;
+			width:60px;
+			height:15px;
+			background:#2F2F2F;
+			transform:rotateZ(28deg) translateX(66px) translateY(13px);
+			/*box-shadow: 1px 1px 1px #4A4A4A;*/
+			z-index:100;
+			}
+			.lensglass{
+			width: 56px;
+			height: 56px;
+			display: inline-block;
+			border-radius: 100%;
+			background: linear-gradient(to bottom,rgba(95,95,95,0.5),rgba(199,199,199,0.5));
+			position: absolute;
+			filter: blur(1px);
+			left: 3px;
+			top: -8px;
+			}
+			.lensglance{
+			width: 20px; 
+			height: 10px;
+			display: inline-block;
+			border-radius: 100%;
+			background: white;
+			position: absolute;
+			filter: blur(1px);
+			left: 16px;
+			top: 0px;
+			transform:rotateZ(-15deg) translateX(-4px) translateY(-4px);
+			opacity:0;
+			transition:0.3s;
+			}
+			.searchform input[type='submit'] + label:hover .lensglance,.searchform input[type='submit'] + label.focus .lensglance{
+			opacity:1.0;
+			transform:rotateZ(-15deg) translateX(0px) translateY(0px);
+			}
+footer{
+  width: 100%;
+  min-height: 80px;
+  background-color: #A5B8B2;
+  background: linear-gradient(to top,#A5B8B2,#7E7F7C);
+  box-shadow: 0 -3px 5px rgba(0,0,0,.3);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  bottom: -20px;
+  font-family: Arial;
+  text-align: center;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+@media all and (max-width:740px){
+  .siteLogo,.topRightBlock{
+    
+  }
+}
+    
+    </style>
+</head>
+<body>
+        <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+
+<div id="topBlock">
+<div class="siteLogo">THILAK</div>
+<div class="topRightBlock">
+          <div class="searchform">
+          <form>
+              <input type="search" name="search_txt" id="search_txt" placeholder="Search"><label for="search_txt"></label>
+              <input type="submit" name="search_submit" id="search_submit" value="Search"><label for="search_submit"><span class="lensglass"></span><span class="lensglance"></span></label>
+          <form>
+      </div>
+</div>
+</div>
+<div id="headerMainBlock">
+<!-- clar img first -->
+<img src="https://s020.radikal.ru/i703/1610/f9/a6de9ef1a1f7.jpg" alt="">
+<!-- fogged img second -->
+<img src="https://s48.radikal.ru/i122/1611/c6/0df8442c61d7.jpg" alt="">
+
+  </div>
+<main>
+<h1>THILAK
+    </h1>
+</main>
+<footer>
+Footer
+</footer>
+
+<svg width="0" height="0">
+<defs>
+<filter id="myFilter">
+  <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="warp" />
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="50" in="SourceGraphic" in2="warp" />
+</filter>
+<filter id="myFilter2">
+  <feTurbulence type="fractalNoise" baseFrequency="0.017" numOctaves="1" result="warp" />
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="50" in="SourceGraphic" in2="warp" />
+</filter>
+<filter id="myFilter3">
+  <feTurbulence type="fractalNoise" baseFrequency="0.017" numOctaves="1" result="warp" />
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="50" in="SourceGraphic" in2="warp" />
+</filter>
+</defs>
+</svg>
+</body>
+<script>
+
+   /* raindrops function */
+function raindrops(){
+  var funcArgs = arguments[0];
+  var DEFS = {quantity : 3};
+  var dropQuantity = funcArgs.quantity || DEFS.quantity;
+  var block = funcArgs.block;
+  if(!block){
+    alert("please define block!");
+    return;
+  }
+  $(function(){
+    var dropW,dropH;//drop width and height
+  var hdCanvas = $("<canvas id='raindropsCanvas'></canvas>");//main raindrops canvas
+  var hdExtraCanvas = $("<canvas id='raindropsExtraCanvas'></canvas>");//canvas which appears (fadeIn) when main canvas is restoring
+  var hdMainBlock = $(block);
+  hdMainBlock.css({
+    width : "100%",
+    height : "auto",
+    position : "relative",
+    overflow : "hidden"
+  });  
+  var hdImg = $(block + " img:first");//clarImg
+  var hdFoggedImg = $(block + " img:last");//foggedImg
+  hdMainBlock.append(hdCanvas);
+  hdMainBlock.append(hdExtraCanvas);
+  hdExtraCanvas.hide();
+  var head = $("head");
+  var drops = [];
+    var r;//drops radius
+    var speed;//drops speed
+    var lSpeed;//drops left speed
+    var restoreTime;
+    var restore;//restore timer
+    var dropHchange;//drop height changing when drop is moving
+  var dropStyle = $("<style id='dropStyle'></style>");
+    var styleTxt = ".drop{background-image:url(" + hdImg.attr("src") + ")}";
+    styleTxt += "\n" + block + " img{";
+    styleTxt += "\nwidth: 100%;";
+    styleTxt += "\nheight: auto;";
+    styleTxt += "\nposition: absolute;";
+    styleTxt += "\nleft: 0;";
+    styleTxt += "\ntop: 0;";
+    styleTxt += "\nz-index: 100;";
+    styleTxt += "}";
+    styleTxt += "\n" + block + "{";
+    styleTxt += "padding: 0;}";
+  dropStyle.append(styleTxt);//appending to head section background-image style for drops and some additional styles
+    var animStyle = $("<style id='dropAnimStyle'></style>");
+
+  head.append(dropStyle);
+    head.append(animStyle);
+  for(var i = 0;i < dropQuantity;i++){
+    drops[i] = $("<div class='drop'></div>");
+    drops[i].appendTo(hdMainBlock);
+  }//creating drops
+  var cnvImg = new Image();//creating img for canvas
+  cnvImg.src = hdFoggedImg.attr("src");//detecting fogged src from img, which canvas will use to draw
+  hdFoggedImg.css({display : "none"});//hide fogged image
+  $(cnvImg).load(function(){
+    var ctx = hdCanvas.get(0).getContext("2d");
+    var extCtx = hdExtraCanvas.get(0).getContext("2d");
+    $(window).resize(function(){
+    var w = hdImg.width();
+  var h = hdImg.height();
+      dropHchange = h / 159.66;
+      restoreTime = 1/(w * h) * 7497787000;//canvas restore time depends on image size - the smaller the size, the longer the time
+    dropW = parseInt(w / 39);
+      dropH = parseInt(h / 14);//drop size depends on image size - the smaller the image, the smaller the drops
+      r = parseInt(dropW * dropH / 61);
+      speed = parseInt(h / 31.9);
+      lSpeed = Math.round(w / 284.6);
+      //radius,vertical speed and horizontal speed also depends on image size
+      styleTxt = ".drop{\nwidth: ";
+      styleTxt += (dropW + "px;\n");
+      styleTxt += ("height: " + dropH + "px;\n}");
+      
+      
+      animStyle.text(styleTxt);
+      /* when you resize the window, the canvas adapts */
+    hdCanvas.attr("width",w);
+    hdExtraCanvas.attr("width",w);
+    hdCanvas.attr("height",h);
+    hdExtraCanvas.attr("height",h);
+      ctx.drawImage(cnvImg,0,0,w,h);
+      extCtx.drawImage(cnvImg,0,0,w,h);
+      /* when you resize the window, the canvas adapts  - endof this code */
+      
+      for(var i = 0;i < dropQuantity;i++){
+        var dropLeft = Math.round(Math.random() * w - drops[i].width());
+     var dropTop = Math.round(Math.random() * h - drops[i].height());   
+        
+    drops[i].css({
+      left : dropLeft,
+      top : dropTop
+    });
+        drops[i].data("leftmove",0);
+        drops[i].data("movedir","toright");
+      }//redrawing drops
+      
+      $(document).mousemove(function(e){
+      if(e.target.id === "raindropsCanvas"){
+        var x = e.offsetX;
+			var y = e.offsetY;
+			var r = 20;
+			var dn = 1 / r;
+			var n = 0;
+			while(n < Math.PI * 2){
+				var x1 = Math.round(x + r * Math.cos(n));
+				var y1 = Math.round(y + r * Math.sin(n));
+				ctx.clearRect(2 * x - x1,y1,(x1 - (2 * x - x1)),1);
+				n += dn;
+			}
+         } else if(e.target.className === "drop"){
+           //deleting drop by mouse
+           var $_this = $(e.target);
+           var dropLeft = Math.round(Math.random() * w - $_this.width());
+     var dropTop = Math.round(Math.random() * h - $_this.height()); 
+           $_this.css({
+             left : dropLeft + "px",
+             top : dropTop + "px"
+           });
+                   }
+    });//deleting fogged layer by mouse
+      
+      function setRestoreInterval(){
+        restore = setInterval(function(){
+      var w = hdImg.width();
+  var h = hdImg.height(); 
+	   hdExtraCanvas.css("z-index",800).fadeIn(2000,function(){
+       ctx.drawImage(cnvImg,0,0,w,h);
+       hdExtraCanvas.hide().css("z-index",99);
+     }); 
+},restoreTime);
+      }
+     if(!restore){
+       setRestoreInterval();
+     } else {
+       clearInterval(restore);
+       setRestoreInterval();
+     }
+  }).resize();
+    
+    
+    
+    //drops moving
+       var dropsMove = setInterval(function(){
+         var w = hdImg.width();
+  var h = hdImg.height();
+      for(var i = 0;i < dropQuantity;i++){
+              var newTop = parseInt(drops[i].css('top')) + speed;
+        var dropLeftMove = drops[i].data("leftmove");
+        var newLeft;
+        var moveDir;
+        moveDir = drops[i].data("movedir");
+        if(moveDir === "toright"){
+          drops[i].css("transform","rotateZ(-45deg) skew(-3deg)");
+          if(dropLeftMove >= lSpeed){
+           drops[i].data("movedir","toleft");
+            drops[i].css("height",dropW + "px");
+           } else {
+             newLeft = parseInt(drops[i].css("left")) + lSpeed;
+             drops[i].css("height",parseInt(drops[i].css("height")) + dropHchange + "px");
+             drops[i].data("leftmove",dropLeftMove + 1);
+           }
+        } else if(moveDir === "toleft"){
+          drops[i].css("transform","rotateZ(45deg) skew(3deg)");
+                    if(dropLeftMove <= 0){
+           drops[i].data("movedir","toright");
+           } else {
+             newLeft = parseInt(drops[i].css("left")) - lSpeed;
+     drops[i].css("height",parseInt(drops[i].css("height")) + dropHchange + "px");        drops[i].data("leftmove",dropLeftMove - 1);
+           }
+        }
+        
+        if(newTop >= h - drops[i].height()){
+           var dropLeft = Math.round(Math.random() * w - drops[i].width());
+     var dropTop = Math.round(Math.random() * h - drops[i].height());   
+        
+    drops[i].css({
+      left : dropLeft,
+      top : dropTop
+    });
+        drops[i].css("height",dropW + "px");  
+          var moveNum = Math.round(Math.random());
+          if(moveNum === 0){
+             drops[i].data("movedir","toright");
+            drops[i].data("leftmove",0);
+             } else {
+             drops[i].data("movedir","toleft");
+               drops[i].data("leftmove",lSpeed);
+             }
+          
+           } else {
+             drops[i].css({top : newTop + "px"});
+             drops[i].css("left",newLeft + "px");
+                    			var x = parseInt(drops[i].css("left"));
+			var y = parseInt(drops[i].css("top"));     
+			//var r = 20;
+			var dn = 1 / r;
+			var n = 0;
+			while(n < Math.PI * 2){
+				var x1 = Math.round(x + r * Math.cos(n));
+				var y1 = Math.round(y + r * Math.sin(n));
+				ctx.clearRect(2 * x - x1,y1,(x1 - (2 * x - x1)),1);
+				n += dn;
+			} 
+       			
+           }
+        
+      }
+    },100);
+    
+  });
+  
+});
+}
+
+/* raindrops function - end ofcode */
+
+/* calling function */
+raindrops({block : "#headerMainBlock", quantity : 3});
+/* calling function - end ofcode; */
+
+</script>
+</html>
